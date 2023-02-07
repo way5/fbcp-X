@@ -1,16 +1,14 @@
 #!/usr/bin/env sh
-#
 # ###################################################################################
 # File: img2bin.sh
 # Project: img2bin - converts image into RGB565 binary or C/C++ data structure
 # File Created: Wednesday, 1st February 2023 4:00:58 pm
 # Author: sk
-# Last Modified: Friday, 3rd February 2023 7:10:36 pm
+# Last Modified: Saturday, 4th February 2023 6:32:16 pm
 # Modified By: Sergey Ko
 # ###################################################################################
 # CHANGELOG:
 # ###################################################################################
-#
 echo "\033[2J"
 TW=$(stty size | awk '{print $2}')
 N=$(((TW/2)-23))
@@ -45,7 +43,7 @@ echo         "█████╗  ██████╔╝██║     ██�
 echo         "██╔══╝  ██╔══██╗██║     ██╔═══╝ ╚════╝ ██╔██╗ " | { perl -pe "s/^/' 'x$N/e"; }
 echo         "██║     ██████╔╝╚██████╗██║           ██╔╝ ██╗" | { perl -pe "s/^/' 'x$N/e"; }
 echo         "╚═╝     ╚═════╝  ╚═════╝╚═╝           ╚═╝  ╚═╝" | { perl -pe "s/^/' 'x$N/e"; }
-echo         "                  display drivers for SPI LCDs" | { perl -pe "s/^/' 'x$N/e"; }
+echo         "                   Display Driver for SPI LCDs" | { perl -pe "s/^/' 'x$N/e"; }
 echo
 printf "%0.s=" $(seq 1 $TW)
 if [ "$(id -u)" -ne 0 ]; then 

@@ -35,7 +35,7 @@
 // #define ILI9488
 // #define ILI9486
 // #define HX8357D
-#define ST7735R
+// #define ST7735R
 // #define ST7735S
 // #define ST7789
 // #define ST7789VW

@@ -1,28 +1,56 @@
-```
-                            ███████╗██████╗  ██████╗██████╗       ██╗  ██╗
-                            ██╔════╝██╔══██╗██╔════╝██╔══██╗      ╚██╗██╔╝
-                            █████╗  ██████╔╝██║     ██████╔╝█████╗ ╚███╔╝ 
-                            ██╔══╝  ██╔══██╗██║     ██╔═══╝ ╚════╝ ██╔██╗ 
-                            ██║     ██████╔╝╚██████╗██║           ██╔╝ ██╗
-                            ╚═╝     ╚═════╝  ╚═════╝╚═╝           ╚═╝  ╚═╝       
-```
+<p align="center">
+<img src="./doc/img/logo.png" alt="fbcp-X" >
+</p>
 
 ## **+ Intro**
 
-This repository contains customized copy of original [fbcp-ili9341](https://github.com/juj/fbcp-ili9341) repository by [Jukka Jylänki](https://github.com/juj). You can learn more about licensing in original [README.md](./doc/README.md).
+This repository contains customized copy of original [fbcp-ili9341](https://github.com/juj/fbcp-ili9341) repository by [Jukka Jylänki](https://github.com/juj). You can learn more about licensing in original [README.md](doc/README.md).
 
 This version has a few new features and some changes. It also may not be fully tested on all device configurations, so keep this in mind when choosing this code over the official version.
 
 ~Good luck
 
+## **+ Drivers**
+
+The followinng displays are supported (see: [config.h](src/config.h)):
+
+<table width="100%" cellpadding="0px" cellspacing="0px" style="width:100%;white-space:pre;border:none;text-align:left;margin:0px;padding:0px;">
+    <tbody><tr><td width="33.3%" style="padding:0px;">
+        ILI9488
+        ILI9341
+        ILI9340
+        ILI9486L
+        ILI9486
+        HX8357D
+        ST7789VW
+        ST7789
+    </td><td width="33.3%" style="padding:0px;">
+        ST7735S
+        ST7735R
+        SSD1351
+        MZ61581
+        MPI3501
+        KEDEI_V63_MPI3501
+        WAVESHARE35B_ILI9486
+        ADAFRUIT_ILI9341_PITFT
+    </td><td width="33.3%" style="padding:0px;">
+        FREEPLAYTECH_WAVESHARE32B
+        WAVESHARE_ST7789VW_HAT
+        PIRATE_AUDIO_ST7789_HAT
+        WAVESHARE_ST7735S_HAT
+        ADAFRUIT_HX8357D_PITFT
+        TONTEC_MZ61581
+    </td></tr></tbody>
+</table>
+
 ##  **+ Brief howto**
 
-The installation is not fully automatic, you need to spend some time on going through the [config.h](./src/config.h). Once it's done you could just copy the code onto your device, launch installer annd follow the instructions. It's pretty simple for those linux where it was tested.
+The installation is not fully automatic, you need to spend some time on going through the [config.h](src/config.h). Once it's done you could just copy the code onto your device, launch installer annd follow the instructions. It's pretty simple for those linux where it was tested.
 
-Before the installation uncomment all the options that suitable for your setup in [config.h](./src/config.h), leave commented what you don't need. Also have check [fbcpX.conf](build/fbcpX.conf) which is operational config that could be found in <code>/etc/fbcpx</code> diirectory.
+Before the installation uncomment all the options that suitable for your setup in [config.h](src/config.h), leave commented what you don't need. Also have check [fbcpX.conf](build/fbcpX.conf) which is operational config that could be found in <code>/etc/fbcpx</code> diirectory.
 
 ### **++ Splash Screen**
-<p style="width:100vw;text-align:center;">
+<p align="center">
 <img alt="splash screen" src="./doc/img/sscreen.gif">
 </p>
 
@@ -53,11 +81,11 @@ or manual method, using:
 
 #### Signals:
 
-| Signal | Description |
+| **Signal** | Description |
 |:---:|:---|
-| SIGUSR1 | toggle backlight (if backlight control enabled) |
-| SIGUSR2 | switch on/off display (if display driver can do that) |
-| SIGPROF | manually clear screen |
+| **SIGUSR1** | toggle backlight (if backlight control enabled) |
+| **SIGUSR2** | switch on/off display (if display driver can do that) |
+| **SIGPROF** | manually clear screen |
 
 #### BlankTime:
 
@@ -79,9 +107,9 @@ If it's a proccess:
 
 In previous versions you'd need to compile the code defining configuration throgh command line. Now we can avoid this by using <code>config.h</code> and <code>fbcpX.conf</code>. 
 
----
 
-| <div style="width:40px;text-align:center;"><img src="https://friconix.com/png/fi-cnsuxs-question-mark.png" alt="bugtracker"></div> | **Let me know in [issues](https://github.com/way5/fbcp-X/issues) :beetle: if you have any suggestion or found an error.** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+
+| <div style="text-align:center;"><img width="50px" height="40px" src="https://friconix.com/png/fi-cnsuxs-question-mark.png" alt="bugtracker"></div> | **Let me know in [issues](https://github.com/way5/fbcp-X/issues) :beetle: if you have any suggestion or found an error.** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
 |:---:|:---|
 
 
