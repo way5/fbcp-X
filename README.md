@@ -14,32 +14,38 @@ This version has a few new features and some changes. It also may not be fully t
 
 The followinng displays are supported (see: [config.h](src/config.h)):
 
-<table width="100%" cellpadding="0px" cellspacing="0px" style="width:100%;white-space:pre;border:none;text-align:left;margin:0px;padding:0px;">
+<table width="100%" cellpadding="0px" cellspacing="0px" style="width:100%;border:none;text-align:left;margin:0px;padding:0px;">
     <tbody><tr><td width="33.3%" style="padding:0px;">
-        ILI9488
-        ILI9341
-        ILI9340
-        ILI9486L
-        ILI9486
-        HX8357D
-        ST7789VW
-        ST7789
+        <ul style="padding:0px;line-height:20px">
+        <li>ILI9488</li>
+        <li>ILI9341</li>
+        <li>ILI9340</li>
+        <li>ILI9486L</li>
+        <li>ILI9486</li>
+        <li>HX8357D</li>
+        <li>ST7789VW</li>
+        <li>ST7789</li>
+        </ul>
     </td><td width="33.3%" style="padding:0px;">
-        ST7735S
-        ST7735R
-        SSD1351
-        MZ61581
-        MPI3501
-        KEDEI_V63_MPI3501
-        WAVESHARE35B_ILI9486
-        ADAFRUIT_ILI9341_PITFT
+        <ul style="padding:0px;line-height:20px">
+        <li>ST7735S</li>
+        <li>ST7735R</li>
+        <li>SSD1351</li>
+        <li>MZ61581</li>
+        <li>MPI3501</li>
+        <li>KEDEI_V63_MPI3501</li>
+        <li>WAVESHARE35B_ILI9486</li>
+        <li>ADAFRUIT_ILI9341_PITFT</li>
+        </ul>
     </td><td width="33.3%" style="padding:0px;">
-        FREEPLAYTECH_WAVESHARE32B
-        WAVESHARE_ST7789VW_HAT
-        PIRATE_AUDIO_ST7789_HAT
-        WAVESHARE_ST7735S_HAT
-        ADAFRUIT_HX8357D_PITFT
-        TONTEC_MZ61581
+        <ul style="padding:0px;line-height:20px">
+        <li>FREEPLAYTECH_WAVESHARE32B</li>
+        <li>WAVESHARE_ST7789VW_HAT</li>
+        <li>PIRATE_AUDIO_ST7789_HAT</li>
+        <li>WAVESHARE_ST7735S_HAT</li>
+        <li>ADAFRUIT_HX8357D_PITFT</li>
+        <li>TONTEC_MZ61581</li>
+        </ul>
     </td></tr></tbody>
 </table>
 
