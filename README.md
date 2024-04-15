@@ -2,6 +2,9 @@
 <img src="./doc/img/logo.png" alt="fbcp-X" >
 </p>
 
+## **+ Deprecation Notice**
+[Read more...](https://github.com/juj/fbcp-ili9341)
+
 ## **+ Intro**
 
 This repository contains customized copy of original [fbcp-ili9341](https://github.com/juj/fbcp-ili9341) repository by [Jukka Jylänki](https://github.com/juj). You can learn more about licensing in original [README.md](doc/README.md).

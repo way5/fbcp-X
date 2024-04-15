@@ -1,8 +1,18 @@
+# Feb 2024 Update
+
+The era of fbcp-ili9341 has come to an end. Fbcp-ili9341 was built on top of the Raspberry Pi's [VideoCore DispmanX API](https://elinux.org/Raspberry_Pi_VideoCore_APIs#vc_dispmanx_.2A).
+
+However, this API has been deprecated by the Raspberry Pi Foundation for a while now, and finally obsolete (=unavailable) on Raspberry Pi 5 and onwards.
+
+The later Raspberry Pi distros no longer have DispmanX active by default even for Pi0-Pi4, but instead Raspberry Pi has moved over to the newer KMS driver compositor stack, which has  a different abstraction for integrating SPI display drivers. Other people are developing SPI display drivers for the Pi that are compatible with the KMS stack. Head on to [this Raspberry Pi forum thread](https://forums.raspberrypi.com/viewtopic.php?p=2190025) to learn more.
+
+This repository is good to be considered archived/stale, although I am not marking it Archived using the GitHub feature, since that feature apparently would also make the issue tracker read-only. Feel free to continue discussing issues on the tracker.
+
 # Introduction
 
 This repository implements a driver for certain SPI-based LCD displays for Raspberry Pi A, B, 2, 3, 4 and Zero.
 
-![PiTFT display](./img/example.jpg "Adafruit PiTFT 2.8 with ILI9341 controller")
+![PiTFT display](/example.jpg "Adafruit PiTFT 2.8 with ILI9341 controller")
 
 The work was motivated by curiosity after seeing this series of videos on the RetroManCave YouTube channel:
  - [RetroManCave: Waveshare 3.5" Raspberry Pi Screen | Review](https://www.youtube.com/watch?v=SGMC0t33C50)
@@ -142,7 +152,7 @@ And additionally, pass the following to customize the GPIO pin assignments you u
 
 - `-DGPIO_TFT_DATA_CONTROL=number`: Specifies/overrides which GPIO pin to use for the Data/Control (DC) line on the 4-wire SPI communication. This pin number is specified in BCM pin numbers. If you have a 3-wire SPI display that does not have a Data/Control line, **set this value to -1**, i.e. `-DGPIO_TFT_DATA_CONTROL=-1` to tell fbcp-ili9341 to target 3-wire ("9-bit") SPI communication.
 - `-DGPIO_TFT_RESET_PIN=number`: Specifies/overrides which GPIO pin to use for the display Reset line. This pin number is specified in BCM pin numbers. If omitted, it is assumed that the display does not have a Reset pin, and is always on.
-- `-DGPIO_TFT_BACKLIGHT=number`: Specifies/overrides which GPIO pin to use for the display backlight line. This pin number is specified in BCM pin numbers. If omitted, it is assumed that the display does not have a GPIO-controlled backlight pin, and is always on.
+- `-DGPIO_TFT_BACKLIGHT=number`: Specifies/overrides which GPIO pin to use for the display backlight line. This pin number is specified in BCM pin numbers. If omitted, it is assumed that the display does not have a GPIO-controlled backlight pin, and is always on. If setting this, also see the `#define BACKLIGHT_CONTROL` option in `config.h`.
 
 fbcp-ili9341 always uses the hardware SPI0 port, so the MISO, MOSI, CLK and CE0 pins are always the same and cannot be changed. The MISO pin is actually not used (at the moment at least), so you can just skip connecting that one. If your display is a rogue one that ignores the chip enable line, you can omit connecting that as well, or might also be able to get away by connecting that to ground if you are hard pressed to simplify wiring (depending on the display).
 
@@ -165,7 +175,7 @@ There are a couple of options to explicitly say which Pi board you want to targe
 
 The following build options are general to all displays and Pi boards, they further customize the build:
 
-- `-GPIO_TFT_BACKLIGHT=<pin>`: If set, enables fbcp-ili9341 to control the display backlight in the given backlight pin. The display will go to sleep after a period of inactivity on the screen. If not, backlight is not touched.
+- `-DBACKLIGHT_CONTROL=ON`: If set, enables fbcp-ili9341 to control the display backlight in the given backlight pin. The display will go to sleep after a period of inactivity on the screen. If not, backlight is not touched.
 - `-DDISPLAY_CROPPED_INSTEAD_OF_SCALING=ON`: If set, and source video frame is larger than the SPI display video resolution, the source video is presented on the SPI display by cropping out parts of it in all directions, instead of scaling to fit.
 - `-DDISPLAY_BREAK_ASPECT_RATIO_WHEN_SCALING=ON`: When scaling source video to SPI display, scaling is performed by default following aspect ratio, adding letterboxes/pillarboxes as needed. If this is set, the stretching is performed breaking aspect ratio.
 - `-DSTATISTICS=number`: Specifies the level of overlay statistics to show on screen. 0: disabled, 1: enabled, 2: enabled, and show frame rate interval graph as well. Default value is 1 (enabled).
@@ -222,9 +232,8 @@ If the user name of your Raspberry Pi installation is something else than the de
 Alternatively, instead of modifying `/etc/rc.local`, use the provided `systemd` unit file as below:
 
 ```bash
-sudo mkdir /etc/fbcpx && sudo chmod 0644 /etc/fbcpx/
-sudo install -m 0644 -t /etc/fbcpx/ fbcpX.conf 
-sudo install -m 0644 -t /etc/systemd/system fbcpX.service 
+sudo install -m 0644 -t /etc fbcp-ili9341.conf 
+sudo install -m 0644 -t /etc/systemd/system fbcp-ili9341.service 
 sudo systemctl daemon-reload
 sudo systemctl enable fbcp && sudo systemctl start fbcp
 ```
@@ -310,7 +319,7 @@ If `USE_GPU_VSYNC` is disabled, then a busy spinning GPU frame snapshotting thre
 
 A drawback is that this kind of polling consumes more CPU time than the vsync option. The extra overhead is around +34% of CPU usage compared to the vsync method. It also requires using a background thread, and because of this, it is not feasible to be used on a single core Pi Zero. [If this polling was unnecessary](https://github.com/raspberrypi/userland/issues/440), this mode would also work on a Pi Zero, and without the added +34% CPU overhead on Pi 3B. See the Known Issues section below for more details.
 
-![PiTFT display](./img/framerate_smoothness.jpg "Smoothness statistics")
+![PiTFT display](/framerate_smoothness.jpg "Smoothness statistics")
 
 There are two other main options that affect frame delivery timings, `#define SELF_SYNCHRONIZE_TO_GPU_VSYNC_PRODUCED_NEW_FRAMES` and `#define SAVE_BATTERY_BY_PREDICTING_FRAME_ARRIVAL_TIMES`. Check out the video [fbcp-ili9341 frame delivery smoothness test on Pi 3B and Adafruit ILI9341 at 119Hz](https://youtu.be/IqzKT33Rwjc) for a detailed side by side comparison of these different modes. The conclusions drawn from the four tested scenarios in the video are:
 
@@ -499,7 +508,7 @@ Unfortunately there are a number of things to go wrong that all result in a whit
 
 This suggests that the power line or the backlight line might not be properly connected. Or if the backlight connects to a GPIO pin on the Pi (and not a voltage pin), then it may be that the pin is not in correct state for the backlight to turn on. Most of the LCD TFT displays I have immediately light up their backlight when they receive power. The Tontec one has a backlight GPIO pin that boots up high but must be pulled low to activate the backlight. OLED displays on the other hand seem to stay all black even after they do get power, while waiting for their initialization to be performed, so for OLEDs it may be normal for nothing to show up on the screen immediately after boot.
 
-If the backlight connects to a GPIO pin, you may need to define `-DGPIO_TFT_BACKLIGHT=<pin>` in CMake command line or `config.h`, and edit `config.h`.
+If the backlight connects to a GPIO pin, you may need to define `-DGPIO_TFT_BACKLIGHT=<pin>` in CMake command line or `config.h`, and edit `config.h` to enable `#define BACKLIGHT_CONTROL`.
 
 #### The display clears from white to black after starting fbcp-ili9341, but picture does not show up?
 
@@ -527,7 +536,7 @@ Double check the Data/Command (D/C) GPIO pin physically, and in CMake command li
 
 #### Colors look wrong on the display
 
-![BGR vs RGB and inverted colors](./img/wrong_colors.jpg)
+![BGR vs RGB and inverted colors](/wrong_colors.jpg)
 
 If the color channels are mixed (red is blue, blue is red, green is green) like shown on the left image, pass the CMake option `-DDISPLAY_SWAP_BGR=ON` to the build.
 
@@ -698,14 +707,6 @@ This driver is licensed under the MIT License. See LICENSE.txt. In nonlegal term
 If you found fbcp-ili9341 useful, it makes me happy to hear back about the projects it found a home in. If you did a build or a project where fbcp-ili9341 worked out, it'd be great to see a video or some photos or read about your experiences.
 
 I hope you build something you enjoy!
-
-### Donating
-
-I have been occassionally asked how to make a donation as a thank you for the work, so here is a PayPal link:
-
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DD8A74WY6Q4L2&currency_code=EUR)
-
-Please note that a contribution is not expected, and you are free to use, publicize and redistribute the driver even without a payment.
 
 ### Contacting
 
